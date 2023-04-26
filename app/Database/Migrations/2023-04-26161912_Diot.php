@@ -1,4 +1,4 @@
-    <?php
+<?php
 
     namespace App\Database\Migrations;
 
@@ -11,7 +11,7 @@
             // Diot
             $this->forge->addField([
                 'id'                    => ['type' => 'int', 'constraint' => 11, 'unsigned' => true, 'auto_increment' => true],
-                'period'             => ['type' => 'varchar', 'constraint' => 4, 'null' => true],
+                'period'             => ['type' => 'varchar', 'constraint' => 6, 'null' => true],
                 'RFC'             => ['type' => 'varchar', 'constraint' => 15, 'null' => true],
                 'beneficiary'             => ['type' => 'varchar', 'constraint' => 512, 'null' => true],
                 'base16'             => ['type' => 'decimal', 'constraint' => 18, 'null' => true],

@@ -6,6 +6,8 @@ $diot["logDeleted"] = "The diot was deleted  with the following data:";
 $diot["msg_delete"] = "The diot was deleted  correctly:";
 $diot["addXLS"] = "Upload XLS";
 
+$diot["download"] = "Download DIOT";
+
 $diot["add"] = "Add Diot";
 $diot["edit"] = "Edit diot";
 $diot["createEdit"] = "Create / Edit";

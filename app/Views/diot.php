@@ -35,6 +35,18 @@
                 </button>
 
             </div>
+
+
+            <div class="btn-group">
+
+                <button class="btn btn-primary btnDownloadDIOT" data-toggle="modal" data-target="#modalDIOTDownload"><i class="fa fa-plus"></i>
+
+                    <?= lang('diot.download') ?>
+
+                </button>
+
+            </div>
+
         </div>
     </div>
     <div class="card-body">

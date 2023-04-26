@@ -52,6 +52,8 @@ $routes->group('admin', function ($routes) {
 
     $routes->post('diot/deleteDiotUUID', 'DiotController::deleteUUID');
 
+    $routes->get('generaDIOT/(:any)', 'DiotController::generateDIOT/$1');
+
 });
 
 

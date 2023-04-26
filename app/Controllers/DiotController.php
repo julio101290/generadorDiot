@@ -82,6 +82,39 @@ class DiotController extends BaseController
         return;
     }
 
+
+    public function generateDIOT($period){
+
+
+        helper('auth');
+         $userName = user()->username;
+         $idUser = user()->id;
+        
+         $datosDiot = $this->diot->select("RFC,sum(base16) as base16,sum(IVA16) as IVA16,sum(rate0) as rate0,sum(total) as total")
+                                 ->where("period",$period)->groupBy("RFC")->findAll();
+
+       
+       $defaultTipoTercero = "04";
+       $defaultTipoOperacion = "85";
+       // var_dump($datosDiot);
+        $txt = "";
+        foreach ($datosDiot as $key => $value) {
+
+        
+          $value["IVA16"] = number_format( $value["IVA16"],2);
+          $value["rate0"] = number_format( $value["rate0"],2);
+
+          $txt .=  "$defaultTipoTercero|$defaultTipoOperacion|$value[RFC]|||||$value[IVA16]|||||||||||$value[rate0]||||". PHP_EOL;;
+         
+          
+        }      
+              
+        header("Content-type: text/plain");
+        header("Content-Disposition: attachment; filename=test.txt");
+        echo $txt;
+    }
+
+
     /**
      * Delete UUID
      */
@@ -144,7 +177,7 @@ class DiotController extends BaseController
             if ($intContador > 0 && $val[0] != "") {
 
                 // Cabecera 
-                $renglon["RFC"] = $val[0];
+                $renglon["RFC"] = trim($val[0]);
                 $renglon["beneficiary"] = $val[1];;
                 $renglon["base16"] = $val[2];
                 $renglon["IVA16"] = $val[3];

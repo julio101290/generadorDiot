@@ -29,5 +29,6 @@ $diot["msg"]["msg_get"] = "Registro obtenido correctamente.";
 $diot["msg"]["msg_get_fail"] = "Registro no encontrado o eliminado.";
 
 $diot["addXLS"] = "Subir XLS";
+$diot["download"] = "Descargar DIOT";
 return $diot;
         
