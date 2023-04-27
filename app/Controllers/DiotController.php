@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use \App\Models\{DiotModel};
+use \App\Models\SettingsrfcModel;
 use App\Models\LogModel;
 use CodeIgniter\API\ResponseTrait;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -14,16 +15,22 @@ class DiotController extends BaseController
     use ResponseTrait;
     protected $log;
     protected $diot;
+
+    protected $settingsRFCModel;
     public function __construct()
     {
         $this->diot = new DiotModel();
         $this->log = new LogModel();
+        $this->settingsRFCModel = new settingsRFCModel();
         helper('menu');
     }
     public function index()
     {
         if ($this->request->isAJAX()) {
-            $datos = $this->diot->select('id,period,RFC,beneficiary,base16,IVA16,rate0,total,created_at,updated_at,deleted_at,uuidFile')->where('deleted_at', null);
+            $datos = $this->diot->select('diot.id,period,diot.RFC,beneficiary,base16,IVA16,rate0,total,diot.created_at,diot.updated_at,diot.deleted_at,uuidFile')
+            ->where('diot.deleted_at', null)->select("(select id from settingsrfc where RFC=diot.RFC) as idSetting");
+            
+
             return \Hermawan\DataTables\DataTable::of($datos)->toJson(true);
         }
         $titulos["title"] = lang('diot.title');
@@ -110,7 +117,7 @@ class DiotController extends BaseController
         }      
               
         header("Content-type: text/plain");
-        header("Content-Disposition: attachment; filename=test.txt");
+        header("Content-Disposition: attachment; filename=DIOT_$period.txt");
         echo $txt;
     }
 

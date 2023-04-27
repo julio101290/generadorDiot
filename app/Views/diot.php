@@ -9,6 +9,7 @@
 
 <?= $this->include('modulesDiot/modalCaptureDiot') ?>
 <?= $this->include('modulesDiot/modalUpLoadXLS') ?>
+<?= $this->include('modulesDiot/modalDownloadDIOT') ?>
 
 
 <!-- SELECT2 EXAMPLE -->
@@ -39,7 +40,7 @@
 
             <div class="btn-group">
 
-                <button class="btn btn-primary btnDownloadDIOT" data-toggle="modal" data-target="#modalDIOTDownload"><i class="fa fa-plus"></i>
+                <button class="btn btn-primary btnDownloadDIOT" data-toggle="modal" data-target="#modalDownloadDIOT"><i class="fa fa-plus"></i>
 
                     <?= lang('diot.download') ?>
 
@@ -312,6 +313,27 @@
 
 
 
+
+
+
+    /**@abstract
+     * 
+     * 
+     * UPLOAD XMLS
+     * 
+     */
+    $(document).on('click', '#btnSaveDiotTXT', function(e) {
+
+
+        var period = $("#periodDownload").val();
+
+        window.open("<?= base_url('admin/generaDIOT/') ?>" + period, "_blank");
+        
+
+    });
+
+
+
     /**
      * Carga datos actualizar
      */
@@ -361,13 +383,13 @@
      =============================================*/
     $(".tableDiot").on("click", ".btn-deleteUUID", function() {
 
-    var uuid = $(this).attr("uuid");
+        var uuid = $(this).attr("uuid");
 
-    var datos = new FormData();
-    datos.append("uuid", uuid);
+        var datos = new FormData();
+        datos.append("uuid", uuid);
 
 
-    Swal.fire({
+        Swal.fire({
                 title: '<?= lang('boilerplate.global.sweet.title') ?>',
                 text: "<?= lang('boilerplate.global.sweet.text') ?>",
                 icon: 'warning',
@@ -385,8 +407,8 @@
                         cache: false,
                         contentType: false,
                         processData: false,
-                   
-                   
+
+
                     }).done((data, textStatus, jqXHR) => {
                         Toast.fire({
                             icon: 'success',

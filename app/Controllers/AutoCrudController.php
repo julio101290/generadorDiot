@@ -22,6 +22,7 @@ class AutoCrudController extends BaseController
 
     public function index($table)
     {
+      
         /*
         $this->generateModel($table);
         $this->generateController($table);
