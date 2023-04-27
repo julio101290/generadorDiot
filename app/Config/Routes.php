@@ -54,6 +54,13 @@ $routes->group('admin', function ($routes) {
 
     $routes->get('generaDIOT/(:any)', 'DiotController::generateDIOT/$1');
 
+    $routes->resource('settingsrfc', [
+        'filter' => 'permission:settingsrfc-permission',
+        'controller' => 'settingsrfcController',
+        'except' => 'show'
+    ]);
+    $routes->post('settingsrfc/save', 'SettingsrfcController::save');
+    $routes->post('settingsrfc/getSettingsrfc', 'SettingsrfcController::getSettingsrfc');
 });
 
 
