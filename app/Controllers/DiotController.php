@@ -28,8 +28,8 @@ class DiotController extends BaseController
     {
         if ($this->request->isAJAX()) {
             $datos = $this->diot->select('diot.id,period,diot.RFC,beneficiary,base16,IVA16,rate0,total,diot.created_at,diot.updated_at,diot.deleted_at,uuidFile')
-            ->where('diot.deleted_at', null)->select("(select id from settingsrfc where RFC=diot.RFC) as idSetting");
-            
+                ->where('diot.deleted_at', null)->select("(select id from settingsrfc where RFC=diot.RFC) as idSetting");
+
 
             return \Hermawan\DataTables\DataTable::of($datos)->toJson(true);
         }
@@ -90,32 +90,48 @@ class DiotController extends BaseController
     }
 
 
-    public function generateDIOT($period){
+    public function generateDIOT($period)
+    {
 
 
         helper('auth');
-         $userName = user()->username;
-         $idUser = user()->id;
-        
-         $datosDiot = $this->diot->select("RFC,sum(base16) as base16,sum(IVA16) as IVA16,sum(rate0) as rate0,sum(total) as total")
-                                 ->where("period",$period)->groupBy("RFC")->findAll();
+        $userName = user()->username;
+        $idUser = user()->id;
+
+        $datosDiot = $this->diot->select("RFC,sum(base16) as base16,sum(IVA16) as IVA16,sum(rate0) as rate0,sum(total) as total")
+            ->where("period", $period)->groupBy("RFC")->findAll();
 
        
-       $defaultTipoTercero = "04";
-       $defaultTipoOperacion = "85";
-       // var_dump($datosDiot);
+
+        // var_dump($datosDiot);
         $txt = "";
         foreach ($datosDiot as $key => $value) {
 
-        
-          $value["IVA16"] = number_format( $value["IVA16"],2);
-          $value["rate0"] = number_format( $value["rate0"],2);
+            $RFCSettings = $this->settingsRFCModel->select("*")->where("RFC", $value["RFC"])->first();
 
-          $txt .=  "$defaultTipoTercero|$defaultTipoOperacion|$value[RFC]|||||$value[IVA16]|||||||||||$value[rate0]||||". PHP_EOL;;
-         
-          
-        }      
-              
+       
+            if ($RFCSettings != null) {
+
+                $defaultTipoTercero = $RFCSettings["thirdParty"];
+                $defaultTipoOperacion = $RFCSettings["typeOperation"];
+                
+            } else {
+    
+                $defaultTipoTercero = "04";
+                $defaultTipoOperacion = "85";
+            }
+
+
+   
+
+
+
+            $value["IVA16"] =$value["IVA16"];
+            $value["rate0"] = $value["rate0"];
+
+            $txt .=  "$defaultTipoTercero|$defaultTipoOperacion|$value[RFC]|||||$value[IVA16]|||||||||||$value[rate0]||||" . PHP_EOL;;
+        }
+
         header("Content-type: text/plain");
         header("Content-Disposition: attachment; filename=DIOT_$period.txt");
         echo $txt;
@@ -126,24 +142,23 @@ class DiotController extends BaseController
      * Delete UUID
      */
 
-     public function deleteUUID()
-     {
-         helper('auth');
-         $userName = user()->username;
-         $idUser = user()->id;
-         $datos = $this->request->getPost("uuid");
+    public function deleteUUID()
+    {
+        helper('auth');
+        $userName = user()->username;
+        $idUser = user()->id;
+        $datos = $this->request->getPost("uuid");
 
-       
-         helper('auth');
-         $userName = user()->username;
-         if (!$found = $this->diot->where("uuidFile",$datos)->delete()) {
-             return $this->failNotFound(lang('diot.msg.msg_get_fail'));
-         }
-         $this->diot->purgeDeleted();
-  
-         return $this->respondDeleted($found, lang('diot.msg_delete'));
-        
-     }
+
+        helper('auth');
+        $userName = user()->username;
+        if (!$found = $this->diot->where("uuidFile", $datos)->delete()) {
+            return $this->failNotFound(lang('diot.msg.msg_get_fail'));
+        }
+        $this->diot->purgeDeleted();
+
+        return $this->respondDeleted($found, lang('diot.msg_delete'));
+    }
 
 
     public function ctrSubirExcel()

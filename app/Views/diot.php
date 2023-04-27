@@ -10,7 +10,7 @@
 <?= $this->include('modulesDiot/modalCaptureDiot') ?>
 <?= $this->include('modulesDiot/modalUpLoadXLS') ?>
 <?= $this->include('modulesDiot/modalDownloadDIOT') ?>
-
+<?= $this->include('modulesSettingsrfc/modalCaptureSettingsrfcDIOT') ?>
 
 <!-- SELECT2 EXAMPLE -->
 <div class="card card-default">
@@ -104,7 +104,7 @@
         ],
 
         ajax: {
-            url: '<?= base_url(route_to('admin/diot')) ?>',
+            url: '<?= base_url('admin/diot') ?>',
             method: 'GET',
             dataType: "json"
         },
@@ -171,12 +171,16 @@
                              <button class="btn btn-warning btnEditDiot" data-toggle="modal" idDiot="${data.id}" data-target="#modalAddDiot">  <i class=" fa fa-edit"></i></button>
                              <button class="btn btn-danger btn-delete" data-id="${data.id}"><i class="fas fa-trash"></i></button>
                              <button class="btn btn-danger btn-deleteUUID" uuid="${data.uuidFile}"><i class="fas fa-file-excel"></i></button>
+                             <button class="btn btn-success btnEditSettingsrfc" data-toggle="modal" rfc="${data.RFC}" idSettingsrfc="${data.idSetting}" data-target="#modalAddSettingsrfc">  <i class=" fa fa-address-card"></i></button>
                          </div>
                          </td>`
                 }
             }
         ]
     });
+
+
+
 
 
 
@@ -209,7 +213,7 @@
 
         $.ajax({
 
-                url: "<?= route_to('admin/diot/save') ?>",
+                url: "<?= base_url('admin/diot/save') ?>",
                 method: "POST",
                 data: datos,
                 cache: false,
@@ -262,7 +266,7 @@
         var fileXLS = $("#fileXLS").prop("files")[0];
 
 
-        $("#btnSaveDiot").attr("disabled", true);
+        $("#btnSaveDiotXLS").attr("disabled", true);
 
         var datos = new FormData();
         datos.append("period", period);
@@ -272,7 +276,7 @@
 
         $.ajax({
 
-                url: "<?= route_to('admin/diot/saveXLS') ?>",
+                url: "<?= base_url('admin/diot/saveXLS') ?>",
                 method: "POST",
                 data: datos,
                 cache: false,
@@ -290,7 +294,7 @@
                         $("#btnSaveDiot").removeAttr("disabled");
 
 
-                        $('#modalAddDiot').modal('hide');
+                        $('#modalXLS').modal('hide');
                     } else {
 
                         Toast.fire({
@@ -328,7 +332,7 @@
         var period = $("#periodDownload").val();
 
         window.open("<?= base_url('admin/generaDIOT/') ?>" + period, "_blank");
-        
+
 
     });
 
@@ -351,7 +355,7 @@
 
         $.ajax({
 
-            url: "<?= base_url(route_to('admin/diot/getDiot')) ?>",
+            url: "<?= base_url('admin/diot/getDiot') ?>",
             method: "POST",
             data: datos,
             cache: false,
@@ -401,7 +405,7 @@
             .then((result) => {
                 if (result.value) {
                     $.ajax({
-                        url: "<?= base_url(route_to('admin/diot/deleteDiotUUID')) ?>",
+                        url: "<?= base_url('admin/diot/deleteDiotUUID') ?>",
                         method: "POST",
                         data: datos,
                         cache: false,
@@ -450,7 +454,7 @@
             .then((result) => {
                 if (result.value) {
                     $.ajax({
-                        url: `<?= base_url(route_to('admin/diot')) ?>/` + idDiot,
+                        url: `<?= base_url('admin/diot') ?>/` + idDiot,
                         method: 'DELETE',
                     }).done((data, textStatus, jqXHR) => {
                         Toast.fire({
@@ -474,5 +478,115 @@
         $("#modalAddDiot").draggable();
 
     });
+
+
+
+
+
+    $(document).on('click', '#btnSaveSettingsrfc', function(e) {
+
+
+        var idSettingsrfc = $("#idSettingsrfc").val();
+        var RFC = $("#RFCSettings").val();
+        var thirdParty = $("#thirdParty").val();
+        var typeOperation = $("#typeOperation").val();
+
+        $("#btnSaveSettingsrfc").attr("disabled", true);
+
+        var datos = new FormData();
+        datos.append("idSettingsrfc", idSettingsrfc);
+        datos.append("RFC", RFC);
+        datos.append("thirdParty", thirdParty);
+        datos.append("typeOperation", typeOperation);
+
+
+        $.ajax({
+
+                url: "<?= base_url('admin/settingsrfc/save') ?>",
+                method: "POST",
+                data: datos,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(respuesta) {
+                    if (respuesta.match(/Correctamente.*/)) {
+
+                        Toast.fire({
+                            icon: 'success',
+                            title: "Guardado Correctamente"
+                        });
+
+                       
+                        $("#btnSaveSettingsrfc").removeAttr("disabled");
+
+                        tableDiot.ajax.reload();
+
+                        $('#modalAddSettingsrfc').modal('hide');
+                    } else {
+
+                        Toast.fire({
+                            icon: 'error',
+                            title: respuesta
+                        });
+
+                        $("#btnSaveSettingsrfc").removeAttr("disabled");
+
+
+                    }
+
+                }
+
+            }
+
+        )
+
+
+
+
+    });
+
+
+    /*=============================================
+      EDITAR Settingsrfc
+      =============================================*/
+    $(".tableDiot").on("click", ".btnEditSettingsrfc", function() {
+
+        var idSettingsrfc = $(this).attr("idSettingsrfc");
+        var rfc = $(this).attr("rfc");
+        var datos = new FormData();
+        datos.append("idSettingsrfc", idSettingsrfc);
+
+        $.ajax({
+
+            url: "<?= base_url('admin/settingsrfc/getSettingsrfc') ?>",
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            success: function(respuesta) {
+
+                if (respuesta != null) {
+                    $("#idSettingsrfc").val(respuesta["id"]);
+
+                    $("#RFCSettings").val(rfc);
+                    $("#thirdParty").val(respuesta["thirdParty"]);
+                    $("#typeOperation").val(respuesta["typeOperation"]);
+                }else{
+                    $("#idSettingsrfc").val("0");
+                    $("#RFCSettings").val(rfc);
+
+                }
+
+
+
+            }
+
+        })
+
+      
+
+    })
 </script>
 <?= $this->endSection() ?>

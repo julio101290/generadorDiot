@@ -19,7 +19,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-pencil-alt"></i></span>
                                 </div>
-                                <input type="text" name="RFC" id="RFC" class="form-control <?= session('error.RFC') ? 'is-invalid' : '' ?>" value="<?= old('RFC') ?>" placeholder="<?= lang('settingsrfc.fields.RFC') ?>" autocomplete="off">
+                                <input type="text" name="RFCSettings" id="RFCSettings" class="form-control <?= session('error.RFC') ? 'is-invalid' : '' ?>" value="<?= old('RFC') ?>" placeholder="<?= lang('settingsrfc.fields.RFC') ?>" autocomplete="off">
                             </div>
                         </div>
                     </div>
