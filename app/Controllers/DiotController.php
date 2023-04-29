@@ -146,10 +146,10 @@ class DiotController extends BaseController
 
 
 
-            $value["IVA16"] =$value["IVA16"];
+            $value["base16"] =$value["base16"];
             $value["rate0"] = $value["rate0"];
 
-            $txt .=  "$defaultTipoTercero|$defaultTipoOperacion|$value[RFC]|||||$value[IVA16]|||||||||||$value[rate0]||||" . PHP_EOL;;
+            $txt .=  "$defaultTipoTercero|$defaultTipoOperacion|$value[RFC]|||||$value[base16]|||||||||||$value[rate0]||||" . PHP_EOL;;
         }
 
         header("Content-type: text/plain");
