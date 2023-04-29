@@ -19,6 +19,7 @@
                 'rate0'             => ['type' => 'decimal', 'constraint' => 18, 'null' => true],
                 'total'             => ['type' => 'decimal', 'constraint' => 18, 'null' => true],
                 'uuidFile'             => ['type' => 'varchar', 'constraint' => 16, 'null' => true],
+                'nameFile'             => ['type' => 'varchar', 'constraint' => 256, 'null' => true],
 
                 'created_at'       => ['type' => 'datetime', 'null' => true],
                 'updated_at'       => ['type' => 'datetime', 'null' => true],

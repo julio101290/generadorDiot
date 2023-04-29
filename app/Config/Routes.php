@@ -50,6 +50,8 @@ $routes->group('admin', function ($routes) {
     $routes->post('diot/getDiot', 'DiotController::getDiot');
     $routes->post('diot/saveXLS', 'DiotController::ctrSubirExcel');
 
+    $routes->get('diot/diotArchivo', 'DiotController::archivosDIOT');
+
     $routes->post('diot/deleteDiotUUID', 'DiotController::deleteUUID');
 
     $routes->get('generaDIOT/(:any)', 'DiotController::generateDIOT/$1');

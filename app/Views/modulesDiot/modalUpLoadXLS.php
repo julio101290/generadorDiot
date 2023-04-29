@@ -58,7 +58,7 @@
 
         $("#idDiot").val("0");
 
-        $("#btnSaveDiot").removeAttr("disabled");
+        $("#btnSaveDiotXLS").removeAttr("disabled");
 
     });
 
@@ -77,7 +77,7 @@
         $(".form-control").val("");
 
         $("#idDiot").val(idDiot);
-        $("#btnGuardarDiot").removeAttr("disabled");
+        $("#btnSaveDiotXLS").removeAttr("disabled");
 
     });
 </script>

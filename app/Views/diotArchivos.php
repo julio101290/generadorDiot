@@ -60,9 +60,9 @@
 
             <div class="btn-group">
 
-                <a class="btn btn-primary " href= "<?= base_url('admin/diot/diotArchivo') ?>"><i class="fa fa-list"></i>
+                <a class="btn btn-primary " href="<?= base_url('admin/diot') ?>"><i class="fa fa-list"></i>
 
-                    Lista Archivos DIOT Subidos
+                    Lista Detallada por RFC
 
                 </a>
 
@@ -74,22 +74,16 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="table-responsive">
-                    <table id="tableDiot" class="table table-striped table-hover va-middle tableDiot">
+                    <table id="tableDiotArchivo" class="table table-striped table-hover va-middle tableDiotArchivo">
                         <thead>
                             <tr>
 
-                                <th>#</th>
-                                <th><?= lang('diot.fields.period') ?></th>
-                                <th><?= lang('diot.fields.RFC') ?></th>
-                                <th><?= lang('diot.fields.beneficiary') ?></th>
-                                <th><?= lang('diot.fields.base16') ?></th>
-                                <th><?= lang('diot.fields.IVA16') ?></th>
-                                <th><?= lang('diot.fields.rate0') ?></th>
-                                <th><?= lang('diot.fields.total') ?></th>
-                                <th><?= lang('diot.fields.created_at') ?></th>
-                                <th><?= lang('diot.fields.updated_at') ?></th>
-                                <th><?= lang('diot.fields.deleted_at') ?></th>
+
                                 <th><?= lang('diot.fields.uuidFile') ?></th>
+
+                                <th><?= lang('diot.fields.period') ?></th>
+
+                                <th>Archivo</th>
 
                                 <th><?= lang('diot.fields.actions') ?> </th>
 
@@ -114,7 +108,7 @@
      * Cargamos la tabla
      */
 
-    var tableDiot = $('#tableDiot').DataTable({
+    var tableDiot = $('#tableDiotArchivo').DataTable({
         processing: true,
         serverSide: true,
         responsive: true,
@@ -124,74 +118,37 @@
         ],
 
         ajax: {
-            url: '<?= base_url('admin/diot') ?>',
+            url: '<?= base_url('admin/diot/diotArchivo') ?>',
             method: 'GET',
             dataType: "json"
         },
         columnDefs: [{
             orderable: false,
-            targets: [12],
+            targets: [3],
             searchable: false,
-            targets: [12]
+            targets: [3]
 
         }],
-        columns: [{
-                'data': 'id'
+        columns: [
+
+            {
+                'data': 'uuidFile'
             },
-
-
             {
                 'data': 'period'
             },
 
             {
-                'data': 'RFC'
-            },
-
-            {
-                'data': 'beneficiary'
-            },
-
-            {
-                'data': 'base16'
-            },
-
-            {
-                'data': 'IVA16'
-            },
-
-            {
-                'data': 'rate0'
-            },
-
-            {
-                'data': 'total'
-            },
-
-            {
-                'data': 'created_at'
-            },
-
-            {
-                'data': 'updated_at'
-            },
-
-            {
-                'data': 'deleted_at'
-            },
-
-            {
-                'data': 'uuidFile'
+                'data': 'nameFile'
             },
 
             {
                 "data": function(data) {
                     return `<td class="text-right py-0 align-middle">
                          <div class="btn-group btn-group-sm">
-                             <button class="btn btn-warning btnEditDiot" data-toggle="modal" idDiot="${data.id}" data-target="#modalAddDiot">  <i class=" fa fa-edit"></i></button>
-                             <button class="btn btn-danger btn-delete" data-id="${data.id}"><i class="fas fa-trash"></i></button>
+                       
                              <button class="btn btn-danger btn-deleteUUID" uuid="${data.uuidFile}"><i class="fas fa-file-excel"></i></button>
-                             <button class="btn btn-success btnEditSettingsrfc" data-toggle="modal" rfc="${data.RFC}" idSettingsrfc="${data.idSetting}" data-target="#modalAddSettingsrfc">  <i class=" fa fa-address-card"></i></button>
+                            
                          </div>
                          </td>`
                 }
@@ -366,7 +323,7 @@
     /*=============================================
      EDITAR Diot
      =============================================*/
-    $(".tableDiot").on("click", ".btnEditDiot", function() {
+    $(".tableDiotArchivo").on("click", ".btnEditDiot", function() {
 
         var idDiot = $(this).attr("idDiot");
 
@@ -405,7 +362,7 @@
     /*=============================================
      ELIMINAR TODO EL ARCHIVO
      =============================================*/
-    $(".tableDiot").on("click", ".btn-deleteUUID", function() {
+    $(".tableDiotArchivo").on("click", ".btn-deleteUUID", function() {
 
         var uuid = $(this).attr("uuid");
 
@@ -458,7 +415,7 @@
     /*=============================================
      ELIMINAR diot
      =============================================*/
-    $(".tableDiot").on("click", ".btn-delete", function() {
+    $(".tableDiotArchivo").on("click", ".btn-delete", function() {
 
         var idDiot = $(this).attr("data-id");
 
@@ -569,7 +526,7 @@
     /*=============================================
       EDITAR Settingsrfc
       =============================================*/
-    $(".tableDiot").on("click", ".btnEditSettingsrfc", function() {
+    $(".tableDiotArchivo").on("click", ".btnEditSettingsrfc", function() {
 
         var idSettingsrfc = $(this).attr("idSettingsrfc");
         var rfc = $(this).attr("rfc");

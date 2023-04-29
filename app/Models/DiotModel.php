@@ -7,11 +7,11 @@ class DiotModel extends Model{
     protected $useAutoIncrement = true;
     protected $returnType     = 'array';
     protected $useSoftDeletes = true;
-    protected $allowedFields = ['id','period','RFC','beneficiary','base16','IVA16','rate0','total','created_at','updated_at','deleted_at','uuidFile'];
+    protected $allowedFields = ['id','period','RFC','beneficiary','base16','IVA16','rate0','total','created_at','updated_at','deleted_at','uuidFile','nameFile'];
     protected $useTimestamps = true;
     protected $createdField  = 'created_at';
     protected $deletedField  = 'deleted_at';
-    protected $validationRules    =  [
+    protected $validationRules    =  ['period' => 'required|',
     ];
     protected $validationMessages = [];
     protected $skipValidation     = false;

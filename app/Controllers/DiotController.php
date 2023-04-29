@@ -37,6 +37,26 @@ class DiotController extends BaseController
         $titulos["subtitle"] = lang('diot.subtitle');
         return view('diot', $titulos);
     }
+
+
+    /** Agrupado por archivo */
+
+    public function archivosDIOT()
+    {
+        helper('menu');
+        helper('auth');
+        if ($this->request->isAJAX()) {
+            $datos = $this->diot->select('uuidFile,period,nameFile')->groupBy("uuidFile,period,nameFile");
+              
+
+
+            return \Hermawan\DataTables\DataTable::of($datos)->toJson(true);
+        }
+        $titulos["title"] = lang('diot.title');
+        $titulos["subtitle"] = lang('diot.subtitle');
+        return view('diotArchivos', $titulos);
+    }
+
     /**
      * Read Diot
      */
@@ -169,6 +189,7 @@ class DiotController extends BaseController
         $path = 'documents/users/';
         $json = [];
         $file_name = $this->request->getFile('fileXLS');
+        $file_name1 = $_FILES['fileXLS']['name'];
         $file_name = $this->uploadFile($path, $file_name);
         $arr_file = explode('.', $file_name);
         $extension = end($arr_file);
@@ -208,8 +229,8 @@ class DiotController extends BaseController
                 $renglon["period"] = $period;
 
                 $renglon["uuidFile"] = $UUIDString;
-
-
+                $renglon["nameFile"] = $file_name1 ;
+ 
                 if ($val[0] == "") {
 
 
