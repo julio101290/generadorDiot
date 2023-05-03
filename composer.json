@@ -1,8 +1,21 @@
 {
-    "name": "codeigniter4/appstarter",
+    "name": "julio101290/generadordiot",
     "type": "project",
-    "description": "CodeIgniter4 starter app",
-    "homepage": "https://codeigniter.com",
+    "description": "programa para generar la DIOT en base a un layout en excel",
+    "homepage": "https://cesarsystems.com.mx/",
+     "keywords": [
+        "codeigniter4",
+        "authentication",
+        "authorization",
+        "generadorDiot",
+        "boilerplate"
+    ],
+    "authors": [
+        {
+            "name": "Julio Leyva",
+            "email": "juliocesarleyvarodriguez@hotmail.com"
+        }
+    ],
     "license": "MIT",
     "require": {
         "php": "^7.4 || ^8.0",
