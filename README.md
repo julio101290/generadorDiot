@@ -13,7 +13,7 @@ When updating, check the release notes to see if there are any changes you might
 to your `app` folder. The affected files can be copied or merged from
 `vendor/codeigniter4/framework/app`.
 
-## Setup
+## Configuraciones
 
 Copie `env` a `.env` y personalícelo para su aplicación, específicamente la baseURL
 y cualquier configuración de la base de datos.
