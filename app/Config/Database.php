@@ -33,7 +33,7 @@ class Database extends Config
         'password' => '',
         'database' => ROOTPATH.'writable/base.sqlite',
         'DBDriver' => 'SQLite3',
-        'DBPrefix' => 'Base',
+        'DBPrefix' => '',
         'pConnect' => false,
         'DBDebug'  => true,
         'charset'  => 'utf8',
