@@ -66,15 +66,10 @@ class Installation extends Seeder
         $this->authorize->createPermission('role-permission', 'User can edit and define permissions for a role.');
         $this->authorize->createPermission('menu-permission', 'User cand create, delete or modify the menu.');
        
-        $this->authorize->createPermission('empresas-permisos', 'Crear permiso para el catalogo de empresas.');
-        $this->authorize->createPermission('email-permiso', 'Permisos para la configuracion del correo electronico');
-        $this->authorize->createPermission('categorias-permission', 'Permiso para entrar a editar las categorias');
-        $this->authorize->createPermission('custumers-permission', 'Permission for add, update and delete for custumers.');
-        $this->authorize->createPermission('products-permission', 'Permisos para acceder al catalogo de productos');
 
-        $this->authorize->createPermission('branchoffices-permission', 'Permiso para las sucursales');
-        $this->authorize->createPermission('costcenter-permission', 'Permiso Centro de costo');
-        $this->authorize->createPermission('storages-permission', 'Permiso para los almacenes');
+        $this->authorize->createPermission('diot-permission', 'Permiso para la diot');
+        $this->authorize->createPermission('settingsrfc', 'Permiso Las Configuraciones');
+
 
         // Assign Permission to role
         $this->authorize->addPermissionToGroup('back-office', 'admin');
